@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ytdlp-host"
+version = "0.3.0"
+description = "Native messaging host that runs yt-dlp for the yt-dlp Downloader Firefox extension"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = ["yt-dlp[default]>=2026.3.17"]
+
+[project.scripts]
+ytdlp-host = "ytdlp_host.bootstrap:main"
+
+[tool.setuptools]
+packages = ["ytdlp_host"]

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>yt-dlp Downloader</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- Link status: native host + ffmpeg self-check -->
+      <header class="topbar">
+        <div id="host-pill" class="pill pill--pending" title="Native host status">
+          <span class="dot"></span><span id="host-text">Connecting…</span>
+        </div>
+        <div class="topbar__spacer"></div>
+        <button id="open-options" class="icon-button" title="Settings" aria-label="Settings">
+          ⚙
+        </button>
+      </header>
+
+      <div id="banner" class="banner" hidden></div>
+
+      <p id="privacy-notice" class="status-line">Downloads connect directly to the video site and its media providers. They can see your IP address. Firefox proxy settings do not apply. Your signed-in browser session is not used for public downloads.</p>
+
+      <!-- Source -->
+      <section class="panel">
+        <div class="field-row">
+          <input
+            id="url-input"
+            class="input"
+            type="url"
+            spellcheck="false"
+            placeholder="Paste a video or playlist URL"
+            aria-label="Video URL"
+          />
+          <button id="probe-button" class="button button--ghost" title="Read metadata">
+            Read
+          </button>
+        </div>
+        <div class="field-row">
+          <select id="session-store" class="input" aria-label="Firefox session" hidden></select>
+          <button id="use-session" class="button button--ghost">Use signed-in session</button>
+          <button id="forget-session" class="button button--ghost" hidden>Use without account</button>
+        </div>
+        <p id="session-status" class="status-line">Without signed-in session. Enable only for videos your account can access.</p>
+        <p id="status-line" class="status-line" role="status" aria-live="polite"></p>
+        <p class="status-line">Tip: right-click a video → Download with yt-dlp. On YouTube, use Shift + right-click.</p>
+      </section>
+
+      <!-- Media summary -->
+      <section id="media" class="panel panel--media" hidden>
+        <img id="thumb" class="thumb" alt="" />
+        <div class="media__text">
+          <h1 id="title" class="title"></h1>
+          <p id="meta" class="meta"></p>
+        </div>
+      </section>
+
+      <!-- Playlist controls -->
+      <section id="playlist" class="panel panel--accent" hidden>
+        <p id="playlist-info" class="playlist-info"></p>
+        <div class="segmented" role="group" aria-label="Playlist scope">
+          <button class="seg" data-mode="single">This video</button>
+          <button class="seg" data-mode="all">Whole playlist</button>
+          <button class="seg" data-mode="select">Choose…</button>
+        </div>
+        <div id="entry-picker" class="entry-picker" hidden>
+          <div class="entry-picker__bar">
+            <button id="select-all" class="link-button" type="button">All</button>
+            <span class="dot-sep">·</span>
+            <button id="select-none" class="link-button" type="button">None</button>
+            <span id="entry-count" class="entry-count"></span>
+          </div>
+          <ul id="entry-list" class="entry-list"></ul>
+          <button id="load-more-entries" class="link-button" type="button" hidden>Load more videos</button>
+        </div>
+      </section>
+
+      <!-- Download options -->
+      <section id="options" class="panel" hidden>
+        <label class="field">
+          <span class="field__label">Quality</span>
+          <select id="format-select" class="input select"></select>
+        </label>
+
+        <label class="checkbox">
+          <input id="audio-only" type="checkbox" />
+          <span>Audio only (extract to MP3)</span>
+        </label>
+
+        <details id="subtitle-details" class="details" hidden>
+          <summary>Subtitles <span id="subtitle-count" class="badge"></span></summary>
+          <div id="subtitle-list" class="checkbox-grid"></div>
+        </details>
+
+        <label class="field">
+          <span class="field__label">Folder</span>
+          <span class="field-row">
+            <input id="output-dir" class="input input--path" type="text" aria-label="Download folder" />
+            <button id="pick-folder" class="button button--ghost" type="button" title="Choose where to save and name your file">Save As…</button>
+          </span>
+        </label>
+        <label class="field" id="filename-field">
+          <span class="field__label">File name</span>
+          <input id="output-filename" class="input" type="text" placeholder="Automatic (video title)" aria-label="File name" />
+          <span class="status-line">The file extension follows your selected format.</span>
+        </label>
+      </section>
+
+      <!-- Primary action -->
+      <section class="panel panel--actions" id="actions" hidden>
+        <button id="download-button" class="button button--primary">
+          Download
+        </button>
+      </section>
+
+      <!-- Queue -->
+      <section class="queue-section">
+        <div class="queue-header">
+          <h2>Queue</h2>
+          <button id="open-history" class="link-button" type="button">History</button>
+          <button id="clear-finished" class="link-button" type="button">Clear finished</button>
+        </div>
+        <ul id="queue" class="queue"></ul>
+        <p id="queue-empty" class="empty">Nothing queued yet.</p>
+      </section>
+    </div>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

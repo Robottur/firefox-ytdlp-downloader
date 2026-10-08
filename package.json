@@ -1,0 +1,16 @@
+{
+  "name": "ytdlp-firefox-extension",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "lint": "web-ext lint --source-dir extension --warnings-as-errors",
+    "build": "web-ext build --source-dir extension --artifacts-dir dist --filename ytdlp-downloader-{version}.xpi --overwrite-dest",
+    "test": "node --test tools/*.test.mjs",
+    "test:integration": "node tools/extension_harness.mjs",
+    "dev": "web-ext run --source-dir extension"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.1",
+    "web-ext": "^10.7.0"
+  }
+}

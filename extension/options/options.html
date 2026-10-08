@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>yt-dlp Downloader — Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <h1>yt-dlp Downloader</h1>
+      <p class="lead">
+        Download preferences are shared with the native host. The host owns the queue and
+        the history-retention preference.
+      </p>
+
+      <section>
+        <h2>Downloads</h2>
+
+        <label class="field">
+          <span class="field__label">Default download folder</span>
+          <span class="row">
+            <input id="default-dir" type="text" class="input input--path" />
+            <button id="pick-folder" class="button" type="button">Change…</button>
+          </span>
+          <span class="hint" id="dir-hint"></span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Default format / quality</span>
+          <input id="default-format" type="text" class="input" spellcheck="false" />
+          <span class="hint">
+            <code>mp4</code> saves the best available video and audio in an MP4 file (default).
+            You can also use a yt-dlp selector, e.g. <code>bestvideo+bestaudio/best</code>.
+            Individual formats are available in the download window.
+          </span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Simultaneous downloads: <b id="concurrency-value">2</b></span>
+          <input id="concurrency" type="range" min="1" max="8" step="1" value="2" />
+          <span class="hint">How many files may download at the same time. More is not faster on most connections.</span>
+        </label>
+
+        <label class="checkbox">
+          <input id="notify" type="checkbox" />
+          <span>Show a notification when a download finishes</span>
+        </label>
+      </section>
+
+      <section>
+        <h2>Native host</h2>
+        <div id="host-status" class="status-card">Checking…</div>
+        <p class="hint" id="host-error"></p>
+        <p class="hint">
+          Downloads continue when Firefox closes. The companion app exits after five idle minutes.
+          To update yt-dlp, finish or cancel your downloads and re-run your platform installer.
+          On Windows, use a newly built host bundle.
+        </p>
+        <p class="hint">YouTube needs Deno (recommended) or Node.js 22+ on PATH.
+          Linux: <code>sudo pacman -S ffmpeg deno</code>.
+          Windows: <code>winget install DenoLand.Deno</code> and <code>winget install Gyan.FFmpeg</code>.
+          Restart the companion app after installing tools.</p>
+      </section>
+
+      <section aria-label="Private diagnostics">
+        <h2>Private diagnostics</h2>
+        <p class="hint">Only bounded operational codes and dependency versions are kept locally.
+          Capture stops after 15 minutes, 1 MiB, or companion exit. No URLs, titles, paths,
+          filenames, cookies, or tokens are captured. Nothing is uploaded.</p>
+        <p id="diagnostics-status" role="status"></p>
+        <button id="diagnostics-start" class="button" type="button">Start 15-minute capture</button>
+        <button id="diagnostics-stop" class="button" type="button">Stop capture</button>
+        <button id="diagnostics-preview" class="button" type="button">Preview diagnostics</button>
+        <button id="diagnostics-save" class="button" type="button" disabled>Save preview locally…</button>
+        <button id="diagnostics-delete" class="button" type="button">Delete retained diagnostics</button>
+        <div id="diagnostics-legacy" hidden>
+          <p class="hint">Older raw logs may contain download activity. Choose whether to keep or remove them.</p>
+          <button id="diagnostics-delete-legacy" class="button" type="button">Remove old raw logs</button>
+          <button id="diagnostics-keep-legacy" class="button" type="button">Keep old logs for now</button>
+        </div>
+        <pre id="diagnostics-content" class="status-card" aria-label="Diagnostic export preview" hidden></pre>
+      </section>
+
+      <section aria-label="Download history">
+        <div class="history-heading"><h2>Download history</h2>
+          <button id="clear-history" class="button" type="button">Clear finished</button></div>
+        <label class="checkbox">
+          <input id="retain-history" type="checkbox" disabled />
+          <span>Keep finished download history on this computer (optional)</span>
+        </label>
+        <p class="hint">By default, only active and interrupted downloads are saved for recovery.
+          Finished results stay in companion memory until dismissed or the companion exits.
+          Enabling history also saves finished titles, source URLs, paths and errors.</p>
+        <p id="history-policy-status" role="status">Loading history preference…</p>
+        <div id="existing-history-choice" hidden>
+          <p class="hint">Existing finished records need a choice. Keeping them does not enable
+            history for future downloads. Removing them also removes their stored errors.</p>
+          <button id="history-keep-existing" class="button" type="button">Keep existing records</button>
+          <button id="history-remove-existing" class="button" type="button">Remove existing records</button>
+        </div>
+        <button id="dismiss-interrupted" class="button" type="button">Clear finished and interrupted records</button>
+        <input id="history-search" class="input" type="search" placeholder="Search title or URL" aria-label="Search history" />
+        <p class="hint">Shows up to 200 finished results plus interrupted downloads. Clear and Dismiss remove
+          app records and metadata caches, preserving downloaded and partial files. OS recent-file lists,
+          backups and filesystem traces may remain; this is not forensic erasure.</p>
+        <ul id="history" class="history"></ul>
+        <p id="history-empty" class="hint">No finished downloads yet.</p>
+      </section>
+
+      <p id="saved" class="saved" role="status"></p>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>
