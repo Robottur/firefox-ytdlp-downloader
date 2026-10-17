@@ -26,8 +26,6 @@ def main():
     if not xpi.exists(): raise SystemExit("Run npm run build first.")
     files = [ROOT / name for name in (".gitignore", "README.md", "CHANGELOG.md", "VALIDATION.md", "LICENSE",
                                      "ytdlp-firefox-extension-spec.md", "package.json", "package-lock.json")]
-    files.extend((ROOT / ".scratch/privacy-first").glob("*.md"))
-    files.extend((ROOT / ".scratch/privacy-first/issues").glob("*.md"))
     for directory in ("extension", "native-host", "native-messaging-manifests", "tools", ".github"):
         for path in (ROOT / directory).rglob("*"):
             if not path.is_file(): continue
