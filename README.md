@@ -59,7 +59,7 @@ Restart Firefox after installing these tools so its PATH is refreshed.
 powershell -NoProfile -ExecutionPolicy Bypass -File .\install_windows.ps1
 ```
 
-The bundle includes Python, yt-dlp and EJS inside `ytdlp-host.exe`. It needs no separate Python installation. ffmpeg and Deno remain separate dependencies.
+The bundle includes Python, yt-dlp and EJS in `ytdlp-host.exe` and its `_internal` folder. It needs no separate Python installation. ffmpeg and Deno remain separate dependencies.
 
 **From this source checkout:** install Python 3.11+ first, then run:
 

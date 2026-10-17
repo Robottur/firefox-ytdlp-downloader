@@ -36,7 +36,13 @@ if ($FromSource) {
     if (!(Test-Path $Executable)) {
         throw 'Place the built ytdlp-host.exe beside this installer, pass -Executable, or use -FromSource with Python 3.11+.'
     }
-    if ((Resolve-Path $Executable).Path -ne $target) { Copy-Item -Force $Executable $target }
+    $bundle = Split-Path (Resolve-Path $Executable).Path
+    if (!(Test-Path (Join-Path $bundle '_internal'))) { throw 'Incomplete bundle: _internal is missing beside ytdlp-host.exe.' }
+    if ($bundle -ne $InstallDir) {
+        Remove-Item -Recurse -Force (Join-Path $InstallDir '_internal') -ErrorAction SilentlyContinue
+        Copy-Item -Force $Executable $target
+        Copy-Item -Recurse -Force (Join-Path $bundle '_internal') $InstallDir
+    }
 }
 $manifestPath = Join-Path $InstallDir 'ytdlp_downloader.host.json'
 $manifest = @{

@@ -78,9 +78,6 @@ def launch():
         options["creationflags"] = (subprocess.CREATE_BREAKAWAY_FROM_JOB |
                                     subprocess.DETACHED_PROCESS |
                                     subprocess.CREATE_NEW_PROCESS_GROUP)
-        # PyInstaller onefile must unpack its own service copy, independent of
-        # the bridge's temporary directory and lifetime.
-        options["env"] = {**os.environ, "PYINSTALLER_RESET_ENVIRONMENT": "1"}
         try:
             subprocess.Popen(command("--service"), **options)
             return

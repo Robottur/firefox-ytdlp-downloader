@@ -82,6 +82,20 @@ class SlowMedia(SimpleHTTPRequestHandler):
         except (BrokenPipeError, ConnectionResetError): pass
 
 
+def explain_failure(url, spec, folder):
+    """The host reports only a safe category; repeat the download in-process to print the raw cause."""
+    import traceback
+    try:
+        from ytdlp_host import probe
+        opts = probe.download_options(spec, ffmpeg_found=True)
+        opts.update(outtmpl=str(folder / "%(title)s.%(ext)s"), logger=None, quiet=False, no_warnings=False, verbose=True)
+        with probe.youtube_dl(opts) as ydl:
+            ydl.extract_info(url, download=True)
+        print("EXPLAIN: the in-process repeat succeeded", flush=True)
+    except Exception:
+        traceback.print_exc()
+
+
 def main():
     with tempfile.TemporaryDirectory(prefix="ytdlp-service-test-") as tmp:
         folder = Path(tmp)
@@ -166,9 +180,11 @@ def main():
             assert result["type"] == "complete", result
             assert "Hello from a subtitle" in (folder / "downloads/captioned.en.srt").read_text()
             print("PASS: subtitle discovery, download and SRT conversion", flush=True)
-            queued = client.request("download_start", url=url.replace("sample.mp4", "streams.mpd"),
-                                    formatId="mp4", outputTemplate="merged.%(ext)s")
+            dash_url = url.replace("sample.mp4", "streams.mpd")
+            queued = client.request("download_start", url=dash_url, formatId="mp4", outputTemplate="merged.%(ext)s")
             result = client.wait(lambda m: m.get("jobId") == queued["jobId"] and m.get("type") in ("complete", "error"))
+            if result["type"] != "complete":
+                explain_failure(dash_url, {"formatId": "mp4"}, folder / "explain")
             assert result["type"] == "complete", result
             streams = json.loads(subprocess.check_output(["ffprobe", "-v", "error", "-show_streams", "-of", "json", result["filepath"]]))
             assert {s["codec_type"] for s in streams["streams"]} == {"audio", "video"}
