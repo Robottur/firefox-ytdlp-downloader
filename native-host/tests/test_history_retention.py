@@ -1,5 +1,6 @@
 """Retention exercises real SQLite and queue transitions without site traffic."""
 import sqlite3
+from contextlib import closing
 import tempfile
 import unittest
 from pathlib import Path
@@ -101,7 +102,7 @@ class HistoryTests(unittest.TestCase):
     def test_migration_detects_legacy_records_and_keep_does_not_opt_in(self):
         self.store.configure_history(True)
         self.store.upsert(jobs.Job(id='old', url='https://example.com', status='error', error='old detail'))
-        with sqlite3.connect(self.db) as conn:
+        with closing(sqlite3.connect(self.db)) as conn, conn:
             conn.execute('DROP TABLE history_policy')
         other = jobs.JobStore(self.db)
         self.addCleanup(other.close)
@@ -121,7 +122,7 @@ class HistoryTests(unittest.TestCase):
         self.store.configure_history(True)
         job = self.submit()
         self.manager._finish(job, 'error')
-        with sqlite3.connect(self.db) as conn:
+        with closing(sqlite3.connect(self.db)) as conn, conn:
             conn.execute("CREATE TRIGGER deny_delete BEFORE DELETE ON jobs BEGIN SELECT RAISE(ABORT, 'denied'); END")
         with self.assertRaises(sqlite3.DatabaseError):
             self.manager.clear_finished()

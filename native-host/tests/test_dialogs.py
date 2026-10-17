@@ -16,7 +16,7 @@ class DialogTests(unittest.TestCase):
                 patch.object(paths.shutil, "which", side_effect=lambda name: "/usr/bin/" + name), \
                 patch.object(paths.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "/tmp/My clip.mp4\n", "")) as run:
             self.assertEqual(paths._desktop_dialog("/tmp", "My clip.mp4", "mp4"), "/tmp/My clip.mp4")
-            self.assertEqual(run.call_args.args[0][-3:], ["--getsavefilename", "/tmp/My clip.mp4", "MP4 files (*.mp4)"])
+            self.assertEqual(run.call_args.args[0][-3:], ["--getsavefilename", str(Path("/tmp") / "My clip.mp4"), "MP4 files (*.mp4)"])
             self.assertEqual(run.call_args.kwargs["stdin"], subprocess.DEVNULL)
             self.assertTrue(run.call_args.kwargs["capture_output"])
 

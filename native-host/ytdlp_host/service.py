@@ -81,6 +81,13 @@ def launch():
         # PyInstaller onefile must unpack its own service copy, independent of
         # the bridge's temporary directory and lifetime.
         options["env"] = {**os.environ, "PYINSTALLER_RESET_ENVIRONMENT": "1"}
+        try:
+            subprocess.Popen(command("--service"), **options)
+            return
+        except PermissionError:
+            # A job object without BREAKAWAY_OK (e.g. CI runners) refuses breakaway.
+            # shortcut: the service then ends with that job; downloads stop if its owner exits.
+            options["creationflags"] &= ~subprocess.CREATE_BREAKAWAY_FROM_JOB
     else:
         options["start_new_session"] = True
     subprocess.Popen(command("--service"), **options)

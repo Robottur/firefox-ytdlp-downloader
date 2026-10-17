@@ -301,6 +301,10 @@ class QueueTests(Base):
         job = self.h.submit()
         self.assertEqual(self.h.wait_for(lambda j: j.id == job.id and j.status == jobs.COMPLETE).id, job.id)
         self.assertIn(job.id, self.h.ran)
+        # list_jobs shares live Job objects, so COMPLETE can be visible just before the message is sent.
+        deadline = time.time() + 5
+        while not any(m["type"] == "complete" for m in self.h.messages) and time.time() < deadline:
+            time.sleep(0.01)
         self.assertTrue(any(m["type"] == "complete" for m in self.h.messages))
 
     def test_cancelling_a_queued_job_never_starts_it(self):

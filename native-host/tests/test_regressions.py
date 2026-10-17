@@ -211,3 +211,17 @@ class HostRegressions(unittest.TestCase):
                     self.assertEqual([m["final"] for m in messages], [False] * 5 + [True])
                     for message in messages: protocol.encode_message(message)
                 finally: host.stop(); paths.close_log()
+
+
+class ServiceLaunchRegressions(unittest.TestCase):
+    def test_windows_launch_retries_without_breakaway_when_job_forbids_it(self):
+        from ytdlp_host import service
+        flags = {"CREATE_BREAKAWAY_FROM_JOB": 0x1000000, "DETACHED_PROCESS": 0x8, "CREATE_NEW_PROCESS_GROUP": 0x200}
+        with patch.object(service.os, "name", "nt"), \
+                patch.multiple(service.subprocess, create=True, **flags), \
+                patch.object(service.subprocess, "Popen", side_effect=[PermissionError(13, "Access is denied"), None]) as popen:
+            service.launch()
+        first, second = (call.kwargs["creationflags"] for call in popen.call_args_list)
+        self.assertTrue(first & flags["CREATE_BREAKAWAY_FROM_JOB"])
+        self.assertFalse(second & flags["CREATE_BREAKAWAY_FROM_JOB"])
+        self.assertTrue(second & flags["DETACHED_PROCESS"])
