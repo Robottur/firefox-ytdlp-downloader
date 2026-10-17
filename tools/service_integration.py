@@ -97,7 +97,8 @@ def explain_failure(url, spec, folder):
 
 
 def main():
-    with tempfile.TemporaryDirectory(prefix="ytdlp-service-test-") as tmp:
+    # Windows refuses to delete files an exiting service may still hold for a moment.
+    with tempfile.TemporaryDirectory(prefix="ytdlp-service-test-", ignore_cleanup_errors=True) as tmp:
         folder = Path(tmp)
         media = folder / "media"; media.mkdir()
         subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "testsrc2=size=640x360:rate=24:duration=4",
@@ -219,7 +220,8 @@ def main():
                                     outputFilename=renamed.name, overwrite=True)
             result = client.wait(lambda m: m.get("jobId") == queued["jobId"] and m.get("type") in ("complete", "error"))
             assert result["type"] == "complete", result
-            assert Path(result["filepath"]) == renamed
+            # samefile: Windows temp paths may use 8.3 short names (RUNNER~1) that the host resolves to long names.
+            assert Path(result["filepath"]).samefile(renamed), result["filepath"]
             assert renamed.read_bytes() == (media / "sample.mp4").read_bytes()
             print("PASS: Save As filename (including literal %) and confirmed replacement are respected", flush=True)
             # Unknown and maliciously framed commands do not kill the service.
