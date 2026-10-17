@@ -3,5 +3,5 @@
   "description": "Native host for the yt-dlp Downloader extension",
   "path": "C:\\Users\\YOUR_USER\\AppData\\Local\\ytdlp-host\\ytdlp-host.exe",
   "type": "stdio",
-  "allowed_extensions": ["ytdlp-downloader@local"]
+  "allowed_extensions": ["ytdlp-downloader-573c69b6aa75@local"]
 }

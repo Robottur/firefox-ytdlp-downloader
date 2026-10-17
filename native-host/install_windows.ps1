@@ -44,7 +44,7 @@ $manifest = @{
     description = 'yt-dlp Downloader companion'
     path = $target
     type = 'stdio'
-    allowed_extensions = @('ytdlp-downloader@local')
+    allowed_extensions = @('ytdlp-downloader-573c69b6aa75@local')
 } | ConvertTo-Json
 [IO.File]::WriteAllText($manifestPath, $manifest, [Text.UTF8Encoding]::new($false))
 $key = 'HKCU:\Software\Mozilla\NativeMessagingHosts\ytdlp_downloader.host'

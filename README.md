@@ -4,6 +4,18 @@ Download MP4 video, MP3 audio, subtitles and playlists from Firefox on Linux and
 
 The extension needs a small companion app. The app owns the queue and keeps downloading when Firefox closes. Reopening Firefox reconnects to it. Downloads, settings and history stay on your computer.
 
+## Quick install (users)
+
+You need two parts: the companion app and the signed Firefox add-on. Both come from the project's **Releases** page.
+
+1. **Install the companion app.**
+   - **Windows:** install the tools with `winget install Gyan.FFmpeg` and `winget install DenoLand.Deno`. Extract `ytdlp-host-windows.zip` and run `powershell -NoProfile -ExecutionPolicy Bypass -File .\install_windows.ps1` in that folder. Windows may warn about an unknown publisher: the executable is not code-signed.
+   - **Linux:** install Python 3.11+, ffmpeg and Deno (see below). Extract `ytdlp-host-linux-<version>.tar.gz` and run `bash native-host/install_linux.sh` inside it.
+2. **Install the add-on.** Open the signed `ytdlp-downloader-<version>.xpi` in Firefox (drag it into a window, or use **Add-ons → ⚙ → Install Add-on From File…**), then accept the prompt.
+3. **Restart Firefox** and click the toolbar button. Settings → Host status should show the companion as connected.
+
+Only install the `.xpi` and companion from the same release; the add-on and companion check each other's identity.
+
 ## Install on Linux
 
 Use desktop Firefox **142 or later** and **Python 3.11 or later**. For Arch Linux:
@@ -24,7 +36,7 @@ Install the extension for development:
 3. Choose `extension/manifest.json`, or the built `.xpi` in `dist/`.
 4. Open a video page and click the extension’s toolbar button. Pin it using Firefox’s Extensions menu if needed.
 
-Temporary add-ons disappear when Firefox exits. For permanent installation in standard Firefox, the XPI must be [signed by Mozilla](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The local build is **unsigned**; signing and publishing require your own Mozilla developer account. The extension ID is fixed at `ytdlp-downloader@local`.
+Temporary add-ons disappear when Firefox exits. For permanent installation in standard Firefox, the XPI must be [signed by Mozilla](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The local build is **unsigned**; signing and publishing require your own Mozilla developer account. The extension ID is fixed at `ytdlp-downloader-573c69b6aa75@local`.
 
 These instructions target a normal desktop Firefox installation. Flatpak/Snap builds have additional native-messaging sandbox integration requirements and are not part of the tested setup.
 

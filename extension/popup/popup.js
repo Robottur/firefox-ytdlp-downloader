@@ -200,7 +200,7 @@ function renderBanners() {
     if (error.code === "not_installed") {
       hint = ["Run install_linux.sh on Linux or install_windows.ps1 on Windows, then reopen this popup."];
     } else if (error.code === "not_allowed") {
-      hint = ["The native messaging manifest must list ", { code: "ytdlp-downloader@local" }, "."];
+      hint = ["The native messaging manifest must list ", { code: "ytdlp-downloader-573c69b6aa75@local" }, "."];
     } else {
       hint = [error.message || "The background script is retrying automatically."];
     }
