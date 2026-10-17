@@ -4,6 +4,8 @@ Download MP4 video, MP3 audio, subtitles and playlists from Firefox on Linux and
 
 The extension needs a small companion app. The app owns the queue and keeps downloading when Firefox closes. Reopening Firefox reconnects to it. Downloads, settings and history stay on your computer.
 
+> **Made with AI.** This tool's code, tests and documentation were written by AI (Anthropic's Claude), with direction and testing by a human maintainer.
+
 ## Quick install (users)
 
 You need two parts: the companion app and the signed Firefox add-on. Both come from the project's **Releases** page.
