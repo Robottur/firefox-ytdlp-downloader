@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 — 2026-10-08 (local release candidate)
+## 0.3.0 — 2026-10-17
 
 - Added explicit per-operation, site-scoped Firefox cookie consent, container selection, in-memory credentials, and renewed consent for interrupted authenticated jobs.
 - Removed broad tab access and disabled private-window downloads. Public downloads use fresh cookie jars and direct networking with a visible disclosure.
@@ -13,7 +13,8 @@
 - `youtu.be` short links now request YouTube login cookies by switching to the canonical watch URL.
 - The extension ID is now a random, unguessable value, so no other add-on can claim the ID the companion trusts or block signing. Reinstall the companion after updating.
 - Added a quick-install section for end users (signed add-on plus companion from Releases).
-- Linux, public-site and local authenticated checks passed. Member-only YouTube was confirmed with a real account. Windows runtime acceptance, authenticated X, and Mozilla signing remain pending.
+- Windows companion: built as one folder (`ytdlp-host.exe` + `_internal`), so the background service survives the browser bridge and starts in well under a second. If Windows forbids leaving the browser's process group, the service still starts.
+- Linux, public-site and local authenticated checks passed. Member-only YouTube was confirmed with a real account. The full test and download suite passes on Linux and Windows in CI (Python 3.11 and 3.14, plus the bundled Windows companion). Not yet tried on a personal Windows PC; signed-in X is untested.
 
 ## 0.2.2 — 2026-10-01
 
