@@ -38,7 +38,7 @@ Install the extension for development:
 3. Choose `extension/manifest.json`, or the built `.xpi` in `dist/`.
 4. Open a video page and click the extension’s toolbar button. Pin it using Firefox’s Extensions menu if needed.
 
-Temporary add-ons disappear when Firefox exits. For permanent installation in standard Firefox, the XPI must be [signed by Mozilla](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The local build is **unsigned**; signing and publishing require your own Mozilla developer account. The extension ID is fixed at `ytdlp-downloader-573c69b6aa75@local`.
+Temporary add-ons disappear when Firefox exits. For permanent installation in standard Firefox, the XPI must be [signed by Mozilla](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/). The local build is **unsigned**; signing and publishing require your own Mozilla developer account. The extension ID is fixed at `ytdlp-downloader-dcfeef8a2e1c@local`.
 
 These instructions target a normal desktop Firefox installation. Flatpak/Snap builds have additional native-messaging sandbox integration requirements and are not part of the tested setup.
 

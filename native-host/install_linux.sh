@@ -35,7 +35,7 @@ launcher.write_text(text, encoding='utf-8')
 launcher.chmod(0o700)
 manifest = {'name': 'ytdlp_downloader.host', 'description': 'yt-dlp Downloader companion',
             'path': str(launcher), 'type': 'stdio',
-            'allowed_extensions': ['ytdlp-downloader-573c69b6aa75@local']}
+            'allowed_extensions': ['ytdlp-downloader-dcfeef8a2e1c@local']}
 (native / 'ytdlp_downloader.host.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
 print(f'Installed host: {launcher}')
 print(f'Firefox registration: {native}')

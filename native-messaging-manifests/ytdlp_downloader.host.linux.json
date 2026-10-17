@@ -3,5 +3,5 @@
   "description": "Native host for the yt-dlp Downloader extension",
   "path": "/home/YOUR_USER/.local/share/ytdlp-host/launcher.sh",
   "type": "stdio",
-  "allowed_extensions": ["ytdlp-downloader-573c69b6aa75@local"]
+  "allowed_extensions": ["ytdlp-downloader-dcfeef8a2e1c@local"]
 }

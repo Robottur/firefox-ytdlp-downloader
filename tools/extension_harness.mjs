@@ -110,7 +110,7 @@ function makeBrowser({ hostProcess, profile }) {
 
   const browser = {
     runtime: {
-      id: "ytdlp-downloader-573c69b6aa75@local",
+      id: "ytdlp-downloader-dcfeef8a2e1c@local",
       lastError: null,
       getURL: (path) => `moz-extension://harness/${path}`,
       connectNative: (name) => {
@@ -119,7 +119,7 @@ function makeBrowser({ hostProcess, profile }) {
       },
       sendMessage: async (message) => {
         for (const listener of profile.messageListeners) {
-          const result = listener(message, { id: "ytdlp-downloader-573c69b6aa75@local" });
+          const result = listener(message, { id: "ytdlp-downloader-dcfeef8a2e1c@local" });
           if (result !== undefined) {
             return result;
           }
