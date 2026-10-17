@@ -204,4 +204,4 @@ Firefox terminates its native child when the connection closes. The bridge start
 
 The host uses yt-dlp’s Python API, a configurable 1–8 download limit, independent cancellation events, bounded metadata caching and per-entry playlist jobs. Startup/settings changes and job state transitions persist to disk. Active queue snapshots are chunked to fit Firefox’s native-messaging limit. The extension ships without granted site access; its optional HTTPS host permission is requested for the selected origin only when you enable signed-in access. Firefox can retain that permission, but each new download still requires a fresh in-app session grant. Metadata/URLs supplied by sites are rendered as text.
 
-See [CHANGELOG.md](CHANGELOG.md) for this revision and [VALIDATION.md](VALIDATION.md) for executed checks and remaining platform limits. The original [project specification](ytdlp-firefox-extension-spec.md) is retained as the design brief.
+See [CHANGELOG.md](CHANGELOG.md) for this revision and [VALIDATION.md](VALIDATION.md) for executed checks and remaining platform limits.
