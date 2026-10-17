@@ -13,7 +13,7 @@
 - `youtu.be` short links now request YouTube login cookies by switching to the canonical watch URL.
 - The extension ID is now a random, unguessable value, so no other add-on can claim the ID the companion trusts or block signing. Reinstall the companion after updating.
 - Added a quick-install section for end users (signed add-on plus companion from Releases).
-- Linux/public-site/local authenticated checks are documented in VALIDATION.md. Member-only YouTube was confirmed with a real account. Windows runtime acceptance, authenticated X, and Mozilla signing remain pending.
+- Linux, public-site and local authenticated checks passed. Member-only YouTube was confirmed with a real account. Windows runtime acceptance, authenticated X, and Mozilla signing remain pending.
 
 ## 0.2.2 — 2026-10-01
 

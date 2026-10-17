@@ -24,7 +24,7 @@ def main():
     DIST.mkdir(exist_ok=True)
     xpi = DIST / f"ytdlp-downloader-{version}.xpi"
     if not xpi.exists(): raise SystemExit("Run npm run build first.")
-    files = [ROOT / name for name in (".gitignore", "README.md", "CHANGELOG.md", "VALIDATION.md", "LICENSE",
+    files = [ROOT / name for name in (".gitignore", "README.md", "CHANGELOG.md", "LICENSE",
                                      "package.json", "package-lock.json")]
     for directory in ("extension", "native-host", "native-messaging-manifests", "tools", ".github"):
         for path in (ROOT / directory).rglob("*"):
