@@ -111,8 +111,9 @@ def main():
             '<track kind="subtitles" src="captions.vtt" srclang="en"></video>', encoding="utf-8")
         (media / "playlist.html").write_text('<title>Two clips</title><video src="sample.mp4"></video>'
             '<video src="second.mp4"></video>', encoding="utf-8")
-        subprocess.run(["ffmpeg", "-v", "error", "-i", str(media / "sample.mp4"),
-            "-map", "0", "-c", "copy", "-f", "dash", str(media / "streams.mpd")], check=True)
+        # Windows ffmpeg writes DASH segments to the working directory for backslash manifest paths.
+        subprocess.run(["ffmpeg", "-v", "error", "-i", "sample.mp4",
+            "-map", "0", "-c", "copy", "-f", "dash", "streams.mpd"], check=True, cwd=media)
         server = ThreadingHTTPServer(("127.0.0.1", 0), partial(SlowMedia, directory=media))
         threading.Thread(target=server.serve_forever, daemon=True).start()
         url = f"http://127.0.0.1:{server.server_port}/sample.mp4"
