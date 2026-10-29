@@ -1,10 +1,12 @@
 [CmdletBinding()]
 param(
-    [string]$Executable = (Join-Path $PSScriptRoot 'ytdlp-host.exe'),
+    [string]$Executable,
     [switch]$FromSource,
     [string]$InstallDir = (Join-Path $env:LOCALAPPDATA 'ytdlp-host')
 )
 $ErrorActionPreference = 'Stop'
+# Windows PowerShell can leave $PSScriptRoot empty inside param() defaults; the body always has it.
+if (!$Executable) { $Executable = Join-Path $PSScriptRoot 'ytdlp-host.exe' }
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 $InstallDir = (Resolve-Path $InstallDir).Path
 $target = Join-Path $InstallDir 'ytdlp-host.exe'
