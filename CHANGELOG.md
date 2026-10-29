@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1 — 2026-10-29
+
+- Windows installer: fixed `Join-Path : Cannot bind argument to parameter 'Path' because it is an empty string` when it was started from Windows PowerShell 5.1 or the PowerShell ISE. `$PSScriptRoot` can be empty inside the script's parameter defaults, so the default companion path is now set in the script body. Confirmed working on a personal Windows PC.
+- Only the companion changed. The 0.3.0 Firefox add-on works with the 0.3.1 companion.
+
 ## 0.3.0 — 2026-10-17
 
 - Added explicit per-operation, site-scoped Firefox cookie consent, container selection, in-memory credentials, and renewed consent for interrupted authenticated jobs.

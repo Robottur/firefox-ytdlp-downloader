@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "incognito": "not_allowed",
   "name": "yt-dlp Downloader",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Download video, audio and subtitles from any yt-dlp–supported site.",
 
   "browser_specific_settings": {

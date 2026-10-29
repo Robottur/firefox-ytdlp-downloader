@@ -33,7 +33,7 @@ from .diagnostics import safe_error
 from .protocol import MessageWriter, ProtocolError, read_message
 
 HOST_NAME = "ytdlp_downloader.host"
-HOST_VERSION = "0.3.0"
+HOST_VERSION = "0.3.1"
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "defaultDownloadDir": "",
